@@ -56,6 +56,25 @@ namespace HZSoft.Application.IService.CustomerManage
         /// <param name="dtSource">实体对象</param>
         /// <returns></returns>
         string BatchAddEntity(DataTable dtSource);
+        //批量下架
+        string DownTelphone(string downTelphones);
+        //批量调价
+        string PriceTelphone(string priceTelphones);
+        /// <summary>
+        /// 上架数据
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        void UpForm(string keyValues);
+        /// <summary>
+        /// 现卡数据
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        void ExistForm(string keyValues);
+        /// <summary>
+        /// 秒杀数据
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        void MiaoShaForm(string keyValues);
         #endregion
     }
 }

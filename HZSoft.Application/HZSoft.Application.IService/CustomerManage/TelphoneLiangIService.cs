@@ -71,21 +71,6 @@ namespace HZSoft.Application.IService.CustomerManage
         /// <param name="keyValue">主键</param>
         void RemoveForm(string keyValues);
         /// <summary>
-        /// 上架数据
-        /// </summary>
-        /// <param name="keyValue">主键</param>
-        void UpForm(string keyValues);
-        /// <summary>
-        /// 现卡数据
-        /// </summary>
-        /// <param name="keyValue">主键</param>
-        void ExistForm(string keyValues);
-        /// <summary>
-        /// 秒杀数据
-        /// </summary>
-        /// <param name="keyValue">主键</param>
-        void MiaoShaForm(string keyValues);
-        /// <summary>
         /// 保存表单（新增、修改）
         /// </summary>
         /// <param name="keyValue">主键值</param>
@@ -102,6 +87,21 @@ namespace HZSoft.Application.IService.CustomerManage
         string DownTelphone(string downTelphones);
         //批量调价
         string PriceTelphone(string priceTelphones);
+        /// <summary>
+        /// 上架数据
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        void UpForm(string keyValues);
+        /// <summary>
+        /// 现卡数据
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        void ExistForm(string keyValues);
+        /// <summary>
+        /// 秒杀数据
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        void MiaoShaForm(string keyValues);
         #endregion
     }
 }

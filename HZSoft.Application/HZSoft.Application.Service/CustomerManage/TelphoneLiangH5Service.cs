@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace HZSoft.Application.Service.CustomerManage
 {
@@ -291,6 +292,222 @@ Package,EnabledMark,OrganizeId FROM TelphoneLiangH5
             }
         }
         /// <summary>
+        /// 上架数据
+        /// </summary>
+        /// <param name="keyValues">主键</param>
+        public void UpForm(string keyValues)
+        {
+            IRepository db = new RepositoryFactory().BaseRepository().BeginTrans();
+            if (!string.IsNullOrEmpty(keyValues))
+            {
+                string[] custIds = keyValues.Split(',');
+                for (int i = 0; i < custIds.Length; i++)
+                {
+                    int? id = Convert.ToInt32(custIds[i]);
+                    TelphoneLiangH5Entity entity = this.BaseRepository().FindEntity(id);
+                    entity.Modify(custIds[i]);
+                    entity.SellMark = 0;//销售状态
+                    this.BaseRepository().Update(entity);
+                }
+                db.Commit();
+            }
+        }
+        /// <summary>
+        /// 现卡数据
+        /// </summary>
+        /// <param name="keyValues">主键</param>
+        public void ExistForm(string keyValues)
+        {
+            //this.BaseRepository().Delete(keyValues);
+            IRepository db = new RepositoryFactory().BaseRepository().BeginTrans();
+            if (!string.IsNullOrEmpty(keyValues))
+            {
+                string[] custIds = keyValues.Split(',');
+                for (int i = 0; i < custIds.Length; i++)
+                {
+                    int? id = Convert.ToInt32(custIds[i]);
+                    TelphoneLiangH5Entity entity = this.BaseRepository().FindEntity(id);
+                    entity.Modify(custIds[i]);
+                    entity.ExistMark = 1;//现卡
+                    this.BaseRepository().Update(entity);
+                }
+                db.Commit();
+            }
+        }
+
+        /// <summary>
+        /// 秒杀数据
+        /// </summary>
+        /// <param name="keyValues">主键</param>
+        public void MiaoShaForm(string keyValues)
+        {
+            //this.BaseRepository().Delete(keyValues);
+            IRepository db = new RepositoryFactory().BaseRepository().BeginTrans();
+            if (!string.IsNullOrEmpty(keyValues))
+            {
+                string[] custIds = keyValues.Split(',');
+                for (int i = 0; i < custIds.Length; i++)
+                {
+                    int? id = Convert.ToInt32(custIds[i]);
+                    TelphoneLiangH5Entity entity = this.BaseRepository().FindEntity(id);
+                    entity.Modify(custIds[i]);
+                    entity.ExistMark = 2;//秒杀
+                    this.BaseRepository().Update(entity);
+                }
+                db.Commit();
+            }
+        }
+
+        /// <summary>
+        /// 批量下架
+        /// </summary>
+        /// <returns></returns>
+        public string DownTelphone(string downTelphones)
+        {
+            string returnMsg = "";
+            if (!string.IsNullOrEmpty(downTelphones))
+            {
+                IRepository db = new RepositoryFactory().BaseRepository().BeginTrans();
+                string[] telphones = downTelphones.Split('\n');
+                for (int i = 0; i < telphones.Length; i++)
+                {
+                    string telphoneName = telphones[i];
+                    if (!string.IsNullOrEmpty(telphoneName))
+                    {
+                        string telphone = telphoneName.Substring(0, 11);
+                        string name = telphoneName.Replace(telphone, "").Trim();
+                        
+                        var entity = db.FindEntity<TelphoneLiangH5Entity>(t => t.Telphone == telphone && t.SellMark == 0 && t.EnabledMark == 0 && t.DeleteMark == 0);//&& t.OrganizeId == companyid
+                        if (entity != null)
+                        {
+                            entity.SellerName = name;
+
+                            entity.SellMark = 1;
+                            entity.Modify(entity.TelphoneID);
+                            db.Update(entity);
+                            returnMsg += telphone + " 已下架</br>";
+                        }
+                        else
+                        {
+                            returnMsg += telphone + " 不属于本公司或已售出</br>";
+                        }
+                        //删除代售表相同号码
+                        var otherList = db.FindList<TelphoneLiangOtherEntity>(t => t.Telphone == telphone);
+                        foreach (var item in otherList)
+                        {
+                            db.Delete(item);
+                        }
+                    }
+
+                }
+                db.Commit();
+            }
+            else
+            {
+                returnMsg = "未接受到任何数据";
+            }
+
+            return returnMsg;
+        }
+
+        /// <summary>
+        /// 批量调价
+        /// </summary>
+        /// <returns></returns>
+        public string PriceTelphone(string priceTelphones)
+        {
+            string returnMsg = "";
+            if (!string.IsNullOrEmpty(priceTelphones))
+            {
+                IRepository db = new RepositoryFactory().BaseRepository().BeginTrans();
+                string[] telphones = priceTelphones.Split('\n');
+                for (int i = 0; i < telphones.Length; i++)
+                {
+                    string telphoneTxt = telphones[i];
+                    if (!string.IsNullOrEmpty(telphoneTxt))
+                    {
+                        string telphone = telphoneTxt.Substring(0, 11);
+                        string[] telphonePrice = Regex.Split(telphoneTxt, "\t|\\s+", RegexOptions.IgnoreCase);//正则表达式
+                        //售价
+                        string priceTxt = telphonePrice[1].Trim();
+                        decimal price = 0;
+                        try
+                        {
+                            price = Convert.ToDecimal(priceTxt);
+                        }
+                        catch (Exception)
+                        {
+                            return telphone + " 售价转换格式错误！";
+                        }
+                        //成本价
+                        string minPriceTxt = telphonePrice[2].Trim();
+                        decimal minPrice = 0;
+                        try
+                        {
+                            minPrice = Convert.ToDecimal(minPriceTxt);
+                        }
+                        catch (Exception)
+                        {
+                            return telphone + " 成本价转换格式错误！";
+                        }
+                        //利润
+                        decimal chaPrice = price - minPrice;
+                        if (chaPrice < 0)
+                        {
+                            return telphone + " 成本价高于售价，价格顺序颠倒！";
+                        }
+
+                        //核算价
+                        decimal checkPrice = 0;
+                        if (telphonePrice.Length == 4)
+                        {
+                            string checkPriceTxt = telphonePrice[3].Trim();
+                            try
+                            {
+                                checkPrice = Convert.ToDecimal(checkPriceTxt);
+                            }
+                            catch (Exception)
+                            {
+                                return telphone + " 核算价价转换格式错误！";
+                            }
+
+                            decimal checkChaPrice = price - checkPrice;
+                            if (checkChaPrice < 0)
+                            {
+                                return telphone + " 核算价高于售价，价格顺序颠倒！";
+                            }
+                        }
+
+                        
+                        var entity = db.FindEntity<TelphoneLiangH5Entity>(t => t.Telphone == telphone && t.SellMark == 0 && t.EnabledMark == 0 && t.DeleteMark == 0);//&& t.OrganizeId == companyid//一级机构可以操作
+                        if (entity != null)
+                        {
+                            entity.MinPrice = minPrice;//成本价
+                            entity.Price = price;//售价
+                            entity.ChaPrice = chaPrice;//利润
+                            entity.CheckPrice = checkPrice;//核算价
+                            entity.Modify(entity.TelphoneID);
+                            db.Update(entity);
+                            returnMsg += telphone + " 已调价</br>";
+                        }
+                        else
+                        {
+                            returnMsg += telphone + " 不属于本公司或已售出</br>";
+                        }
+                    }
+
+                }
+                db.Commit();
+            }
+            else
+            {
+                returnMsg = "未接受到任何数据";
+            }
+
+            return returnMsg;
+        }
+
+        /// <summary>
         /// 保存表单（新增、修改）
         /// </summary>
         /// <param name="keyValue">主键值</param>
@@ -298,7 +515,7 @@ Package,EnabledMark,OrganizeId FROM TelphoneLiangH5
         /// <returns></returns>
         public void SaveForm(int? keyValue, TelphoneLiangH5Entity entity)
         {
-            if (keyValue!=0)
+            if (keyValue!=null)
             {
                 entity.Modify(keyValue);
                 this.BaseRepository().Update(entity);

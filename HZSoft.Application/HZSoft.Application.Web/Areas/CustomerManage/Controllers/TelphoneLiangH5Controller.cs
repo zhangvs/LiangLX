@@ -186,5 +186,58 @@ namespace HZSoft.Application.Web.Areas.CustomerManage.Controllers
             return View();
         }
         #endregion
+
+
+
+
+        /// <summary>
+        /// 批量上架
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UpForm(string keyValues)
+        {
+            telphoneliangh5bll.UpForm(keyValues);
+            return Success("上架成功。");
+        }
+
+        /// <summary>
+        /// 批量现卡
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ExistForm(string keyValues)
+        {
+            telphoneliangh5bll.ExistForm(keyValues);
+            return Success("状态以修改为现卡。");
+        }
+
+        /// <summary>
+        /// 批量秒杀
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult MiaoShaForm(string keyValues)
+        {
+            telphoneliangh5bll.MiaoShaForm(keyValues);
+            return Success("状态以修改为秒杀。");
+        }
+
+        /// <summary>
+        /// 批量下架
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DownTelphone(string downTelphones)
+        {
+            string returnMsg = telphoneliangh5bll.DownTelphone(downTelphones);
+            return Success(returnMsg);
+        }
+
+        /// <summary>
+        /// 批量调价
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PriceTelphone(string priceTelphones)
+        {
+            string returnMsg = telphoneliangh5bll.PriceTelphone(priceTelphones);
+            return Success(returnMsg);
+        }
     }
 }

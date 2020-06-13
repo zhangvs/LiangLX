@@ -105,6 +105,85 @@ namespace HZSoft.Application.Busines.CustomerManage
                 return ex.Message;
             }
         }
+
+
+        /// <summary>
+        /// 上架数据
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        public void UpForm(string keyValues)
+        {
+            try
+            {
+                service.UpForm(keyValues);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        /// <summary>
+        /// 现卡数据
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        public void ExistForm(string keyValues)
+        {
+            try
+            {
+                service.ExistForm(keyValues);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 秒杀数据
+        /// </summary>
+        /// <param name="keyValue">主键</param>
+        public void MiaoShaForm(string keyValues)
+        {
+            try
+            {
+                service.MiaoShaForm(keyValues);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 批量下架
+        /// </summary>
+        /// <returns></returns>
+        public string DownTelphone(string downTelphones)
+        {
+            try
+            {
+                return service.DownTelphone(downTelphones);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        /// <summary>
+        /// 批量调价
+        /// </summary>
+        /// <returns></returns>
+        public string PriceTelphone(string priceTelphones)
+        {
+            try
+            {
+                return service.PriceTelphone(priceTelphones);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         #endregion
     }
 }

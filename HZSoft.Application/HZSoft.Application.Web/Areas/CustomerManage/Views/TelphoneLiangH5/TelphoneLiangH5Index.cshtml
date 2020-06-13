@@ -211,6 +211,102 @@
         }
     }
 
+    //批量下架
+    function btn_down() {
+        layer.prompt({
+            title: '请输入要下架的【靓号和姓名】(每行一个),格式如下：', value: '16505391111 张三\n16505392222 李四', formType: 2,
+            area: ['220px', '400px']
+        }, function (text, index) {
+            layer.close(index);
+            $.ajax({
+                url: '../../CustomerManage/TelphoneLiangH5/DownTelphone?downTelphones=' + escape(text),
+                type: "get",
+                async: false,
+                success: function (data) {
+                    if (data != "") {
+                        var result = JSON.parse(data);
+                        layer.alert(result.message, {
+                            skin: 'layui-layer-lan', closeBtn: 0
+                        });
+                        $('#gridTable').trigger('reloadGrid');
+                    }
+
+                }
+            });
+        });
+    }
+
+    //批量上架
+    function btn_up() {
+        var keyValues = $('#gridTable').jqGridRowValue('TelphoneID');
+        if (keyValues) {
+            $.ConfirmAjax({
+                url: '../../CustomerManage/TelphoneLiangH5/UpForm',
+                param: { keyValues: keyValues },
+                success: function (data) {
+                    $('#gridTable').trigger('reloadGrid');
+                }
+            })
+        } else {
+            dialogMsg('请选择需要批量上架的靓号', 0);
+        }
+    }
+    //批量现卡
+    function btn_exist() {
+        var keyValues = $('#gridTable').jqGridRowValue('TelphoneID');
+        if (keyValues) {
+            $.ConfirmAjax({
+                url: '../../CustomerManage/TelphoneLiangH5/ExistForm',
+                param: { keyValues: keyValues },
+                success: function (data) {
+                    $('#gridTable').trigger('reloadGrid');
+                }
+            })
+        } else {
+            dialogMsg('请选择需要批量现卡的靓号', 0);
+        }
+    }
+
+    //批量秒杀
+    function btn_miaosha() {
+        var keyValues = $('#gridTable').jqGridRowValue('TelphoneID');
+        if (keyValues) {
+            $.ConfirmAjax({
+                url: '../../CustomerManage/TelphoneLiangH5/MiaoShaForm',
+                param: { keyValues: keyValues },
+                success: function (data) {
+                    $('#gridTable').trigger('reloadGrid');
+                }
+            })
+        } else {
+            dialogMsg('请选择需要批量现卡的靓号', 0);
+        }
+    }
+
+    //批量调价
+    function btn_price() {
+        layer.prompt({
+            title: '请输入要调价号码的【靓号 售价 成本价 核算价】(每行一个),格式如下：', value: '16512000000 150000 105000 100000\n16509877777 120000 84000 80000', formType: 2, maxlength: 10000, //可输入文本的最大长度，默认500
+            area: ['320px', '400px']
+        }, function (text, index) {
+            layer.close(index);
+            $.ajax({
+                url: '../../CustomerManage/TelphoneLiangH5/PriceTelphone?priceTelphones=' + escape(text),
+                type: "get",
+                async: false,
+                success: function (data) {
+                    if (data != "") {
+                        var result = JSON.parse(data);
+                        layer.alert(result.message, {
+                            skin: 'layui-layer-lan', closeBtn: 0
+                        });
+                        $('#gridTable').trigger('reloadGrid');
+                    }
+
+                }
+            });
+        });
+    }
     //批量导入
     function btn_import() {
         layer.open({
@@ -272,6 +368,11 @@
         </div>
         <div class="btn-group">
             <a id="lr-import" class="btn btn-default" onclick="btn_import()"><i class="fa fa-toggle-on"></i>&nbsp;导入</a>
+            <a id="lr-down" class="btn btn-default" onclick="btn_down()"><i class="fa fa-toggle-on"></i>&nbsp;下架</a>
+            <a id="lr-price" class="btn btn-default" onclick="btn_price()"><i class="fa fa-toggle-on"></i>&nbsp;调价</a>
+            <a id="lr-up" class="btn btn-default" onclick="btn_up()"><i class="fa fa-toggle-on"></i>&nbsp;上架</a>
+            <a id="lr-exist" class="btn btn-default" onclick="btn_exist()"><i class="fa fa-toggle-on"></i>&nbsp;现卡</a>
+            <a id="lr-miaosha" class="btn btn-default" onclick="btn_miaosha()"><i class="fa fa-toggle-on"></i>&nbsp;秒杀</a>
             <a id="lr-export" class="btn btn-default" onclick="btn_export()"><i class="fa fa-sign-out"></i>&nbsp;导出</a>
         </div>
     </div>

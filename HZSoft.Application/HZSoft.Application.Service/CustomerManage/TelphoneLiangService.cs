@@ -1124,17 +1124,6 @@ namespace HZSoft.Application.Service.CustomerManage
             {
                 entity.Modify(keyValue);
                 this.BaseRepository().Update(entity);
-                if (entity.SellMark==1)
-                {
-                    //删除代售表相同号码
-                    IRepository db = new RepositoryFactory().BaseRepository().BeginTrans();
-                    var otherList = db.FindList<TelphoneLiangOtherEntity>(t => t.Telphone == entity.Telphone);
-                    foreach (var item in otherList)
-                    {
-                        db.Delete(item);
-                    }
-                    db.Commit();
-                }
             }
             else
             {
@@ -1152,9 +1141,17 @@ namespace HZSoft.Application.Service.CustomerManage
                 var TelphoneData = db.FindEntity<TelphoneDataEntity>(t => t.Number7 == Number7);
                 if (TelphoneData != null)
                 {
-                    entity.City = TelphoneData.City.Replace("市", "");
-                    entity.CityId = TelphoneData.CityId;
-                    entity.Operator = TelphoneData.Operate;
+                    if (string.IsNullOrEmpty(TelphoneData.City))
+                    {
+                        throw new Exception("号段城市为空：" + Number7);
+                    }
+                    else
+                    {
+                        entity.City = TelphoneData.City.Replace("市", "");
+                        entity.CityId = TelphoneData.CityId;
+                        entity.Operator = TelphoneData.Operate;
+                        entity.Brand = TelphoneData.Brand;
+                    }
                 }
                 else
                 {
