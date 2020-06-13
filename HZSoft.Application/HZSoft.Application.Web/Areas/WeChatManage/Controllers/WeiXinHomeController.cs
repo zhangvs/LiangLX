@@ -23,7 +23,7 @@ namespace HZSoft.Application.Web.Areas.WeChatManage.Controllers
     {
         WeChat_UsersBLL userBll = new WeChat_UsersBLL();
         private OrdersBLL ordersbll = new OrdersBLL();
-        private TelphoneLiangBLL tlbll = new TelphoneLiangBLL();
+        private TelphoneLiangH5BLL tlbll = new TelphoneLiangH5BLL();
 
         //跳转
         public ActionResult Redirect(string code, string state)
@@ -118,13 +118,13 @@ namespace HZSoft.Application.Web.Areas.WeChatManage.Controllers
                     }
 
                     //不同步
-                    //TelphoneLiangEntity tel = tlbll.GetEntity(order.TelphoneID);//根据靓号id获取靓号，修改售出状态
-                    //if (tel != null)
-                    //{
-                    //    tel.SellMark = 1;
-                    //    tel.SellerName = order.Host;
-                    //}
-                    //tlbll.SaveForm(tel.TelphoneID, tel);
+                    TelphoneLiangH5Entity tel = tlbll.GetEntity(order.TelphoneID);//根据靓号id获取靓号，修改售出状态
+                    if (tel != null)
+                    {
+                        tel.SellMark = 1;
+                        tel.SellerName = order.Host;
+                    }
+                    tlbll.SaveForm(tel.TelphoneID, tel);
                 }
             }
 
@@ -224,13 +224,13 @@ namespace HZSoft.Application.Web.Areas.WeChatManage.Controllers
                                 ordersbll.SaveForm(order.Id, order);
 
                                 //不同步
-                                //TelphoneLiangEntity tel = tlbll.GetEntity(order.TelphoneID);//根据靓号id获取靓号，修改售出状态
-                                //if (tel != null)
-                                //{
-                                //    tel.SellMark = 1;
-                                //    tel.SellerName = order.Host;
-                                //}
-                                //tlbll.SaveForm(tel.TelphoneID, tel);
+                                TelphoneLiangH5Entity tel = tlbll.GetEntity(order.TelphoneID);//根据靓号id获取靓号，修改售出状态
+                                if (tel != null)
+                                {
+                                    tel.SellMark = 1;
+                                    tel.SellerName = order.Host;
+                                }
+                                tlbll.SaveForm(tel.TelphoneID, tel);
                             }
                         }
                     }

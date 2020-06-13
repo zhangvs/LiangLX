@@ -515,13 +515,36 @@ Package,EnabledMark,OrganizeId FROM TelphoneLiangH5
         /// <returns></returns>
         public void SaveForm(int? keyValue, TelphoneLiangH5Entity entity)
         {
-            if (keyValue!=null)
+            if (!string.IsNullOrEmpty(keyValue.ToString()))
             {
                 entity.Modify(keyValue);
                 this.BaseRepository().Update(entity);
             }
             else
             {
+                //根据前7位确定城市网络
+                IRepository db = new RepositoryFactory().BaseRepository().BeginTrans();
+                string Number7 = entity.Telphone.Substring(0, 7);
+
+                var TelphoneData = db.FindEntity<TelphoneDataEntity>(t => t.Number7 == Number7);
+                if (TelphoneData != null)
+                {
+                    if (string.IsNullOrEmpty(TelphoneData.City))
+                    {
+                        throw new Exception("号段城市为空：" + Number7);
+                    }
+                    else
+                    {
+                        entity.City = TelphoneData.City.Replace("市", "");
+                        entity.CityId = TelphoneData.CityId;
+                        entity.Operator = TelphoneData.Operate;
+                        entity.Brand = TelphoneData.Brand;
+                    }
+                }
+                else
+                {
+                    throw new Exception("号段不存在：" + Number7);
+                }
                 entity.Create();
                 this.BaseRepository().Insert(entity);
             }
@@ -545,7 +568,7 @@ Package,EnabledMark,OrganizeId FROM TelphoneLiangH5
             IRepository db = new RepositoryFactory().BaseRepository().BeginTrans();
 
             int columns = dtSource.Columns.Count;
-            string cf = "";
+            int cf = 0, zx = 0;
             for (int i = 0; i < rowsCount; i++)
             {
                 try
@@ -556,7 +579,8 @@ Package,EnabledMark,OrganizeId FROM TelphoneLiangH5
                         var liang_Data = db.FindEntity<TelphoneLiangH5Entity>(t => t.Telphone == telphone && t.DeleteMark != 1);//删除过的可以再次导入
                         if (liang_Data != null)
                         {
-                            cf += telphone + ",";
+                            ++cf;
+                            continue;
                         }
 
                         //根据前7位确定城市和运营商
@@ -680,6 +704,7 @@ Package,EnabledMark,OrganizeId FROM TelphoneLiangH5
                         };
                         entity.Create();
                         db.Insert(entity);
+                        ++zx;
                     }
 
                 }
@@ -691,10 +716,10 @@ Package,EnabledMark,OrganizeId FROM TelphoneLiangH5
 
             }
             db.Commit();
-            if (cf != "")
+            if (cf != 0)
             {
-                LogHelper.AddLog("跳过重复导入号码：" + cf);
-                return "跳过重复导入号码：" + cf;
+                LogHelper.AddLog("跳过重复导入号码：" + cf + "个，导入：" + zx + "个");
+                return "跳过重复导入号码：" + cf + "个，导入：" + zx + "个";
             }
             else
             {
