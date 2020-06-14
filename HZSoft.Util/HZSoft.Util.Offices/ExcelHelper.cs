@@ -501,21 +501,30 @@ namespace HZSoft.Util.Offices
             for (int i = (sheet.FirstRowNum + 1); i <= sheet.LastRowNum; i++)
             {
                 IRow row = sheet.GetRow(i);
-                if (row.GetCell(0)!=null)
+                try
                 {
-                    //去除末尾空白格，导入条数决定导入数量，vip
-                    if (!string.IsNullOrEmpty(row.GetCell(0).ToString()))
+                    if (row.GetCell(0) != null)
                     {
-                        DataRow dataRow = dt.NewRow();
-                        for (int j = row.FirstCellNum; j < cellCount; j++)
+                        //去除末尾空白格，导入条数决定导入数量，vip
+                        if (!string.IsNullOrEmpty(row.GetCell(0).ToString()))
                         {
-                            if (row.GetCell(j) != null)
-                                dataRow[j] = row.GetCell(j).ToString();
+                            DataRow dataRow = dt.NewRow();
+                            for (int j = row.FirstCellNum; j < cellCount; j++)
+                            {
+                                if (row.GetCell(j) != null)
+                                    dataRow[j] = row.GetCell(j).ToString();
+                            }
+                            dt.Rows.Add(dataRow);
                         }
-                        dt.Rows.Add(dataRow);
-                    }
 
+                    }
                 }
+                catch (Exception)
+                {
+                    
+                    break;
+                }
+
             }
             return dt;
         }
