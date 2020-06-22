@@ -612,7 +612,7 @@ Request.UserHostAddress, tenPayV3Info.TenPayV3Notify, TenPayV3Type.JSAPI, openId
         {
             ViewBag.Id = id;
             OrdersEntity ordersEntity = ordersbll.GetEntity(id);//第一次打开，微信回调还没完成，一般是未支付状态
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 ordersEntity = ordersbll.GetEntity(id);//第二次才会成功获取到支付成功状态
                 if (ordersEntity.PayStatus == 1)//如果支付成功直接返回

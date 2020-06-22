@@ -116,7 +116,7 @@ namespace HZSoft.Application.Service.BaseManage
         {
             var expression = LinqExtensions.True<UserEntity>();
             //top 100 percent
-            string strSql = "select * from Base_User where DeleteMark <> 1 and EnabledMark <>0 ";
+            string strSql = "select * from Base_User where UserId!='System' AND EnabledMark=1 AND DeleteMark=0 ";
             var queryParam = queryJson.ToJObject();
             //公司主键
             if (!queryParam["organizeId"].IsEmpty())

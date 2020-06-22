@@ -571,12 +571,11 @@ Package,EnabledMark,OrganizeId FROM TelphoneLiangH5
             }
 
             IRepository db = new RepositoryFactory().BaseRepository().BeginTrans();
-
-            int columns = dtSource.Columns.Count;
-            int cf = 0, zx = 0;
-            for (int i = 0; i < rowsCount; i++)
+            try
             {
-                try
+                int columns = dtSource.Columns.Count;
+                int cf = 0, zx = 0;
+                for (int i = 0; i < rowsCount; i++)
                 {
                     string telphone = dtSource.Rows[i][0].ToString();
                     if (telphone.Length == 11)
@@ -686,7 +685,6 @@ Package,EnabledMark,OrganizeId FROM TelphoneLiangH5
                             }
                         }
 
-
                         //添加靓号
                         TelphoneLiangH5Entity entity = new TelphoneLiangH5Entity()
                         {
@@ -711,24 +709,24 @@ Package,EnabledMark,OrganizeId FROM TelphoneLiangH5
                         db.Insert(entity);
                         ++zx;
                     }
-
                 }
-                catch (Exception ex)
+                db.Commit();
+                if (cf != 0)
                 {
-                    LogHelper.AddLog(ex.Message);
-                    return ex.Message;
+                    LogHelper.AddLog("跳过重复导入号码：" + cf + "个，导入：" + zx + "个");
+                    return "跳过重复导入号码：" + cf + "个，导入：" + zx + "个";
+                }
+                else
+                {
+                    return "导入成功";
                 }
 
             }
-            db.Commit();
-            if (cf != 0)
+            catch (Exception ex)
             {
-                LogHelper.AddLog("跳过重复导入号码：" + cf + "个，导入：" + zx + "个");
-                return "跳过重复导入号码：" + cf + "个，导入：" + zx + "个";
-            }
-            else
-            {
-                return "导入成功";
+                db.Rollback();
+                LogHelper.AddLog(ex.Message);
+                return ex.Message;
             }
 
         }

@@ -29,7 +29,7 @@ namespace HZSoft.Application.Web.Areas.GeneratorManage.Controllers
         public ActionResult CodeBuilder()
         {
             string OutputDirectory = Server.MapPath("~/Web.config"); ;
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
                 OutputDirectory = OutputDirectory.Substring(0, OutputDirectory.LastIndexOf('\\'));
             ViewBag.OutputDirectory = OutputDirectory;
             ViewBag.UserName = OperatorProvider.Provider.Current().UserName;
