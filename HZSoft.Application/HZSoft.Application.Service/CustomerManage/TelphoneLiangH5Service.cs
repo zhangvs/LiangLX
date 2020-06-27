@@ -96,7 +96,7 @@ namespace HZSoft.Application.Service.CustomerManage
                 {
                     strSql += " and price >= '" + jgqj[0] + "'";
                 }
-                if (!string.IsNullOrEmpty(jgqj[1]))
+                if (!string.IsNullOrEmpty(jgqj[1]) && jgqj[1] != "0")//最大价格不为0
                 {
                     strSql += " and price <= '" + jgqj[1] + "'";
                 }
@@ -110,7 +110,7 @@ namespace HZSoft.Application.Service.CustomerManage
                 {
                     strSql += " and MaxPrice >= '" + jgqj[0] + "'";
                 }
-                if (!string.IsNullOrEmpty(jgqj[1]))
+                if (!string.IsNullOrEmpty(jgqj[1]) && jgqj[1]!="0")
                 {
                     strSql += " and MaxPrice <= '" + jgqj[1] + "'";
                 }

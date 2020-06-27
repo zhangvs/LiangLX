@@ -81,15 +81,15 @@
                     }
                 },
                 { label: '销售人', name: 'SellerName', index: 'SellerName', width: 150, align: 'center', sortable: true },
-                //{
-                //    label: '所属公司', name: 'OrganizeId', index: 'OrganizeId', width: 100, align: 'center', sortable: true,
-                //    formatter: function (cellvalue, options, rowObject) {
-                //        return top.clientorganizeData[cellvalue].FullName;
-                //    }
-                //},
-                //{
-                //    label: '所属公司', name: 'OrganizeId', index: 'OrganizeId', width: 100, align: 'left', sortable: true, hidden: true
-                //},
+                {
+                    label: '所属公司', name: 'OrganizeId', index: 'OrganizeId', width: 100, align: 'center', sortable: true,
+                    formatter: function (cellvalue, options, rowObject) {
+                        return top.clientorganizeData[cellvalue].FullName;
+                    }
+                },
+                {
+                    label: '所属公司', name: 'OrganizeId', index: 'OrganizeId', width: 100, align: 'left', sortable: true, hidden: true
+                },
                 //{ label: '备注', name: 'Description', index: 'Description', width: 150, align: 'left', sortable: true },
                 { label: '更新人', name: 'ModifyUserName', index: 'ModifyUserName', width: 100, align: 'center', sortable: true },
                 { label: '最后更新', name: 'ModifyDate', index: 'ModifyDate', width: 150, align: 'left', sortable: true },
