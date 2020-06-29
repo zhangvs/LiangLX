@@ -27,7 +27,7 @@ using System.Web.Mvc;
 namespace HZSoft.Application.Web.Areas.webapp.Controllers
 {
     /// <summary>
-    /// 广州头条：先跳转到www.jnlxsm.net:8064，
+    /// 广州头条：先跳转到www.jnlxsm.net:8075，
     /// 再跳转到 shop.jnlxsm.net
     /// </summary>
     public class jinan5Controller : Controller
@@ -119,7 +119,7 @@ namespace HZSoft.Application.Web.Areas.webapp.Controllers
 
                         styleStr +=
                         $" <li> " +
-                        //$"    <a href='https://shop.jnlxsm.net/webapp/jinan2/product/{item.TelphoneID}?host={host}'>" +//跳转到135服务器详情页面
+                        //$"    <a href='https://shop.jnlxsm.net/webapp/jinan5/product/{item.TelphoneID}?host={host}'>" +//跳转到135服务器详情页面
                         $"    <a href=\"#\" onclick=\"toInfo('{item.TelphoneID}','{host}')\">" +//跳转到135服务器
                         $"        <div class='mobile'>{telphone}</div>" +
                         $"        <div class='city'>{item.City}·{item.Description}</div>" +//·{item.Operator}
@@ -246,7 +246,7 @@ namespace HZSoft.Application.Web.Areas.webapp.Controllers
                         model.TotalAmount = ordersEntity.Price.ToString();// 付款金额"0.01"
                         model.OutTradeNo = sp_billno;// 外部订单号，商户网站订单系统中唯一的订单号
                         model.ProductCode = "QUICK_WAP_WAY";
-                        model.QuitUrl = "https://www.jnlxsm.net:8064/webapp/jinan2/index";// 支付中途退出返回商户网站地址
+                        model.QuitUrl = "https://www.jnlxsm.net:8075/webapp/jinan5/index";// 支付中途退出返回商户网站地址
                         model.TimeoutExpress = "90m";
                         AlipayTradeWapPayRequest request = new AlipayTradeWapPayRequest();
                         //设置支付完成同步回调地址
@@ -315,8 +315,8 @@ namespace HZSoft.Application.Web.Areas.webapp.Controllers
                                 trade_type = "NATIVE",
                                 trade_no = sp_billno,
                                 payid = ordersEntity.Id.ToString(),
-                                wx_query_href = "https://shop.jnlxsm.net/webapp/jinan2/queryWx/" + ordersEntity.Id,
-                                wx_query_over = "https://shop.jnlxsm.net/webapp/jinan2/paymentFinish/" + ordersEntity.Id
+                                wx_query_href = "https://shop.jnlxsm.net/webapp/jinan5/queryWx/" + ordersEntity.Id,
+                                wx_query_over = "https://shop.jnlxsm.net/webapp/jinan5/paymentFinish/" + ordersEntity.Id
                             };
 
                             root = new H5Response { code = true, status = true, msg = "\u5fae\u4fe1\u626b\u7801\u63d0\u4ea4\u6210\u529f\uff01", data = h5PayData };
@@ -351,8 +351,8 @@ namespace HZSoft.Application.Web.Areas.webapp.Controllers
                                 trade_type = "H5",
                                 trade_no = sp_billno,
                                 payid = ordersEntity.Id.ToString(),
-                                wx_query_href = "https://shop.jnlxsm.net/webapp/jinan2/queryWx/" + ordersEntity.Id,
-                                wx_query_over = "https://shop.jnlxsm.net/webapp/jinan2/paymentFinish/" + ordersEntity.Id
+                                wx_query_href = "https://shop.jnlxsm.net/webapp/jinan5/queryWx/" + ordersEntity.Id,
+                                wx_query_over = "https://shop.jnlxsm.net/webapp/jinan5/paymentFinish/" + ordersEntity.Id
                             };
 
                             root = new H5Response { code = true, status = true, msg = "\u5fae\u4fe1\u0048\u0035\u63d0\u4ea4\u6210\u529f\uff01", data = h5PayData };
@@ -412,7 +412,7 @@ Request.UserHostAddress, tenPayV3Info.TenPayV3Notify, TenPayV3Type.JSAPI, openId
                     nonceStr = nonceStr,
                     package = package,
                     paySign = TenPayV3.GetJsPaySign(WeixinConfig.AppID2, timeStamp, nonceStr, package, WeixinConfig.Key),
-                    callback_url = "https://shop.jnlxsm.net/webapp/jinan2/paymentFinish/" + ordersEntity.Id
+                    callback_url = "https://shop.jnlxsm.net/webapp/jinan5/paymentFinish/" + ordersEntity.Id
                 };
                 ViewBag.WxModel = jsApiPayData;
                 LogHelper.AddLog(JsonConvert.SerializeObject(jsApiPayData));//记录日志
@@ -495,7 +495,7 @@ Request.UserHostAddress, tenPayV3Info.TenPayV3Notify, TenPayV3Type.JSAPI, openId
                     nonceStr = nonceStr,
                     package = package,
                     paySign = TenPayV3.GetJsPaySign(WeixinConfig.AppID2, timeStamp, nonceStr, package, WeixinConfig.Key),
-                    callback_url = "https://shop.jnlxsm.net/webapp/jinan2/paymentFinish/" + id
+                    callback_url = "https://shop.jnlxsm.net/webapp/jinan5/paymentFinish/" + id
                 };
                 ViewBag.WxModel = jsApiPayData;
                 LogHelper.AddLog(JsonConvert.SerializeObject(jsApiPayData));//记录日志

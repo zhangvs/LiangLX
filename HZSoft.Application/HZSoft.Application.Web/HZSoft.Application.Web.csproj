@@ -271,6 +271,7 @@
     <Compile Include="Areas\webapp\Controllers\AliPayController.cs" />
     <Compile Include="Areas\webapp\Controllers\gmController.cs" />
     <Compile Include="Areas\webapp\Controllers\jinan4Controller.cs" />
+    <Compile Include="Areas\webapp\Controllers\jinan5Controller.cs" />
     <Compile Include="Areas\webapp\Controllers\jinanController.cs" />
     <Compile Include="Areas\webapp\Controllers\jntt2Controller.cs" />
     <Compile Include="Areas\webapp\Controllers\jnttController.cs" />
@@ -344,6 +345,15 @@
     <Content Include="Areas\webapp\Views\gm\mobileinfo.cshtml" />
     <Content Include="Areas\webapp\Views\gm\mobileorder.cshtml" />
     <Content Include="Areas\webapp\Views\gm\paymentFinish.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan5\express.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan5\Index.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan5\info2.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan5\JsApi.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan5\mobileinfo.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan5\mobileorder.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan5\paymentFinish.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan5\product.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan5\productJsApi.cshtml" />
     <Content Include="Areas\webapp\Views\jntt2\express.cshtml" />
     <Content Include="Areas\webapp\Views\jntt2\Index.cshtml" />
     <Content Include="Areas\webapp\Views\jntt2\info2.cshtml" />
@@ -2038,7 +2048,6 @@
     <Content Include="Areas\webapp\Views\mwd2\productJsApi.cshtml" />
     <Content Include="Areas\webapp\Views\jinan\productJsApi.cshtml" />
     <Content Include="Areas\webapp\Views\gm\productJsApi.cshtml" />
-    <Content Include="Areas\webapp\Views\jinan5\Index.cshtml" />
     <Content Include="Areas\webapp\Views\jinan4\express.cshtml" />
     <Content Include="Areas\webapp\Views\jinan4\Index.cshtml" />
     <Content Include="Areas\webapp\Views\jinan4\info2.cshtml" />
