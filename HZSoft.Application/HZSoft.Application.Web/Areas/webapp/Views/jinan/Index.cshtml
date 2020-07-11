@@ -934,6 +934,7 @@
     <script src="~/statics/js/jquery.cookie.js"></script>
     <script src="~/statics/js/changestyle.js"></script>
     <script src="~/statics/plus/alt_tabs.js"></script>
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
     <script type="text/javascript">
         request = function (keyValue) {
             var search = location.search.slice(1);
@@ -968,7 +969,13 @@
         var mid = 0;
 
 
-        city = request('city');
+        
+        if (request('city')!="") {
+            city = request('city');
+        }
+        else {
+            city = returnCitySN['cid'];
+        }
         keyword = request('keyword');
         orderType = request('orderType');
         price = request('price');

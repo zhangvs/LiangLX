@@ -38,7 +38,6 @@
                     <span class="phone-number mobile-box-span">@Model.Telphone</span>
                     <span class="phone-loc mobile-box-span">
                         <span>@Model.City</span>
-                        <span>@Model.Operator</span>
                         <span>(@Model.Brand)</span>
                     </span>
                 </div>
@@ -63,7 +62,7 @@
                         套餐说明
                     </div>
                     <div class="phone-intro-content">
-                        @Model.Package
+                        网络：@Model.Operator.Substring(0,2) @Model.Package
                     </div>
                 </div>
             </div>
@@ -399,7 +398,8 @@
                         Tel:@Model.Telphone,
                         Price:@Model.Price,
                         PC: IsPC(),
-                        Host: '@ViewBag.host'
+                        Host: '@ViewBag.host',
+                        TouUrl: document.referrer
                     },
                     cache: false,
                     async: false,

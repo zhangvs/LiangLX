@@ -125,6 +125,13 @@ namespace HZSoft.Application.Web.Areas.WeChatManage.Controllers
                         tel.SellerName = order.Host;
                     }
                     tlbll.SaveForm(tel.TelphoneID, tel);
+
+
+                    //头条url回调
+                    if (!string.IsNullOrEmpty(order.TouUrl))
+                    {
+                        TouTiaoApi(order.TouUrl);
+                    }
                 }
             }
 
@@ -231,6 +238,12 @@ namespace HZSoft.Application.Web.Areas.WeChatManage.Controllers
                                     tel.SellerName = order.Host;
                                 }
                                 tlbll.SaveForm(tel.TelphoneID, tel);
+
+                                //头条url回调
+                                if (!string.IsNullOrEmpty(order.TouUrl))
+                                {
+                                    TouTiaoApi(order.TouUrl);
+                                }
                             }
                         }
                     }
@@ -276,6 +289,18 @@ namespace HZSoft.Application.Web.Areas.WeChatManage.Controllers
             }
             return sArray;
 
+        }
+
+
+        /// <summary>
+        /// 提交到头条API方式
+        /// </summary>
+        /// <param name="touUrl"></param>
+        /// <returns></returns>
+        public void TouTiaoApi(string touUrl)
+        {
+            string result = HttpUtility.UrlEncode(touUrl);
+            HttpClientHelper.Get(@"https://ad.oceanengine.com/track/activate/?link=" + result+ "&event_type=2");
         }
     }
 }

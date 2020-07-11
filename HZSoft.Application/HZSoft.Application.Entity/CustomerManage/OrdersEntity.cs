@@ -163,6 +163,11 @@ namespace HZSoft.Application.Entity.CustomerManage
         /// </summary>
         /// <returns></returns>
         public int? DeleteMark { get; set; }
+        /// <summary>
+        /// 头条落地页
+        /// </summary>
+        /// <returns></returns>
+        public string TouUrl { get; set; }
         #endregion
 
         #region 扩展操作

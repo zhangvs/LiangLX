@@ -200,6 +200,7 @@ namespace HZSoft.Application.Web.Areas.webapp.Controllers
                         ordersEntity.City = area[1];//市
                     }
                 }
+                ordersEntity.TouUrl = Request.Url.ToString();
 
                 string payType = ordersEntity.PayType;
                 if (payType == "alipay")

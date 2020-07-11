@@ -936,6 +936,7 @@
     <script src="~/statics/js/jquery.cookie.js"></script>
     <script src="~/statics/js/changestyle.js"></script>
     <script src="~/statics/plus/alt_tabs.js"></script>
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
     <script type="text/javascript">
         request = function (keyValue) {
             var search = location.search.slice(1);
@@ -969,8 +970,12 @@
         var orderType = '';
         var mid = 0;
 
-
-        city = request('city');
+        if (request('city') != "") {
+            city = request('city');
+        }
+        else {
+            city = returnCitySN['cid'];
+        }
         keyword = request('keyword');
         orderType = request('orderType');
         price = request('price');
@@ -1464,7 +1469,7 @@
     </script>
 
     <script type="text/javascript">
-        function toInfo(id,host) {
+        function toInfo(id, host) {
             if (isWeiXin()) {
                 location.href = 'https://shop.jnlxsm.net/webapp/jntt/productJsApi/' + id + '?host=' + host;
             }

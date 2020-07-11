@@ -270,6 +270,7 @@
     <Compile Include="Areas\ReportManage\ReportManageAreaRegistration.cs" />
     <Compile Include="Areas\webapp\Controllers\AliPayController.cs" />
     <Compile Include="Areas\webapp\Controllers\gmController.cs" />
+    <Compile Include="Areas\webapp\Controllers\jinan2Controller.cs" />
     <Compile Include="Areas\webapp\Controllers\jinan4Controller.cs" />
     <Compile Include="Areas\webapp\Controllers\jinan5Controller.cs" />
     <Compile Include="Areas\webapp\Controllers\jinanController.cs" />
@@ -345,6 +346,15 @@
     <Content Include="Areas\webapp\Views\gm\mobileinfo.cshtml" />
     <Content Include="Areas\webapp\Views\gm\mobileorder.cshtml" />
     <Content Include="Areas\webapp\Views\gm\paymentFinish.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan2\express.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan2\Index.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan2\info2.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan2\JsApi.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan2\mobileinfo.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan2\mobileorder.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan2\paymentFinish.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan2\product.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan2\productJsApi.cshtml" />
     <Content Include="Areas\webapp\Views\jinan5\express.cshtml" />
     <Content Include="Areas\webapp\Views\jinan5\Index.cshtml" />
     <Content Include="Areas\webapp\Views\jinan5\info2.cshtml" />
