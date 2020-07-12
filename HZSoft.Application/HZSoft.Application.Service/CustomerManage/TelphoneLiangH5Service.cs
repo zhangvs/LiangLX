@@ -220,33 +220,20 @@ namespace HZSoft.Application.Service.CustomerManage
 
 
         /// <summary>
-        /// H5端查询按钮，List页面，分页加载
+        /// 头条推广库，只有利新可以上传，么有其它机构，可以不用查询机构id
         /// </summary>
         /// <param name="pagination"></param>
         /// <param name="queryJson"></param>
         /// <returns></returns>
         public IEnumerable<TelphoneLiangH5Entity> GetPageListH5LX(Pagination pagination, string queryJson)
         {
-            //本机构sql
-            string ownOrgSql = "";//默认为空
-
-            var queryParam = queryJson.ToJObject();
-            if (queryParam["OrganizeIdH5"].IsEmpty())
-            {
-                return null;
-            }
-
-            string organizeId = queryParam["OrganizeIdH5"].ToString();
-            ownOrgSql = " and OrganizeId ='" + organizeId + "'";
-            string ownWhere = ownOrgSql + GetSql(queryJson);
-            
+            string ownWhere = GetSql(queryJson);
             //自身，父，0级
             string strSql = @" SELECT * FROM (
  SELECT TelphoneID,Telphone,City,Operator,Price,MaxPrice,Grade,ExistMark,CASE ExistMark WHEN '2' THEN '自营秒杀' WHEN '1' THEN '自营现卡' ELSE '自营预售' END Description,
-Package,EnabledMark,OrganizeId FROM TelphoneLiangH5 
+Package,EnabledMark FROM TelphoneLiangH5 
  WHERE SellMark<>1 AND DeleteMark<>1 and EnabledMark <> 1 " + ownWhere
                 + " )t ";
-            
             return this.BaseRepository().FindList(strSql.ToString(), pagination);
         }
 

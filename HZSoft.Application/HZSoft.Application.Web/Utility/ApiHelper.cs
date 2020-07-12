@@ -5,6 +5,7 @@ using System.Web;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using HZSoft.Util;
 
 namespace HZSoft.Application.Web.Utility
 {
@@ -18,7 +19,7 @@ namespace HZSoft.Application.Web.Utility
         {
             try
             {
-                string url = "http://api.map.baidu.com/location/ip?ak=znpP1hiQi4hmlNH8oZMa5Z3VfgVnKPII&ip=" + ip;
+                string url = "http://api.map.baidu.com/location/ip?ak=xaVAHHxPUd8tkrzvHofMTKW9qkwtiK1Z&ip=" + ip;
                 WebClient client = new WebClient();
                 var buffer = client.DownloadData(url);
                 string jsonText = Encoding.UTF8.GetString(buffer);

@@ -7,6 +7,7 @@ using HZSoft.Application.Busines.CustomerManage;
 using HZSoft.Application.Code;
 using HZSoft.Application.Entity.CustomerManage;
 using HZSoft.Application.Entity.WeChatManage;
+using HZSoft.Application.Web.Utility;
 using HZSoft.Application.Web.Utility.AliPay;
 using HZSoft.Util;
 using HZSoft.Util.WebControl;
@@ -59,83 +60,75 @@ namespace HZSoft.Application.Web.Areas.webapp.Controllers
         {
             string host = Request.Url.Host + Request.Url.Port;
             int ipage = page == null ? 1 : int.Parse(page.ToString());
-            string organizeId = "bae859c9-3df5-4da0-bea9-3e20bbc7c353";
-            if (!string.IsNullOrEmpty(organizeId))
+            string City = "";
+            if (string.IsNullOrEmpty(city))
             {
-                var organize = organizebll.GetEntity(organizeId);
-                if (!string.IsNullOrEmpty(organize.OrganizeId))
-                {
-                    JObject queryJson = new JObject { { "Telphone", keyword },
-                        { "OrganizeIdH5", organizeId },
-                        { "pid", organize.ParentId },
-                        { "top", organize.TopOrganizeId },
+                string ip = Net.Ip;
+                City = ApiHelper.GetBaiduIp(ip);
+                City = City.Length > 2 ? City.Substring(0, 2) : City;
+                LogHelper.AddLog(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + "坐标：" + ip + City);
+            }
+            JObject queryJson = new JObject { { "Telphone", keyword },
                         { "city", city },
                         { "price", price },
                         { "except", except },
                         { "yuyi", yuyi },
                         { "Grade",features },
                         { "SellMark",0 },
-                        //{ "ExistMark","1,2" }
+                        { "City",City }
                     };
-                    string sidx = "";
-                    string sord = "";
-                    if (orderType == "1")
-                    {
-                        sidx = "price";
-                        sord = "asc";
-                    }
-                    else if (orderType == "2")
-                    {
-                        sidx = "price";
-                        sord = "desc";
-                    }
-                    else
-                    {
-                        //sidx = "right(Telphone,1)";//按照最后一位排序
-                        //sord = "asc";
-                        sidx = "TelphoneID";//按照最后一位排序
-                        sord = "desc";
-                    }
-                    Pagination pagination = new Pagination()
-                    {
-                        rows = 40,
-                        page = ipage,
-                        sidx = sidx,
-                        sord = sord
-                    };
-                    var entityList = tlbll.GetPageListH5LX(pagination, queryJson.ToString());//自身秒杀可卖，其它平台秒杀不卖
-
-                    string styleStr = "";
-                    foreach (var item in entityList)
-                    {
-                        string qian = item.Telphone.Substring(0, 3);
-                        string zhong = item.Telphone.Substring(3, 4);
-                        string hou = item.Telphone.Substring(7, 4);
-                        string telphone = "<font color='#E33F23'>" + qian + "</font><font color='#3A78F3'>" + zhong + "</font><font color='#E33F23'>" + hou + "</font>";
-                        //利新价格调整规则，这是需要单独写代码的价格调整：
-                        decimal? jg = item.Price;
-
-                        styleStr +=
-                        $" <li> " +
-                        $"    <a href=\"#\" onclick=\"toInfo('{item.TelphoneID}','{host}')\">" +//跳转到135服务器
-                        $"        <div class='mobile'>{telphone}</div>" +
-                        $"        <div class='city'>{item.City}·{item.Description}</div>" +//·{item.Operator}
-                        $"        <div class='price'>" +
-                        $"            <i>￥</i>{jg}" +
-                        $"            <span class='hide oldprice'>原价<i><i>￥</i>{jg * 2}</i></span>" +
-                        //$"            <span class='hide huafei'>话费0</span>" +
-                        $"        </div>" +
-                        $"    </a>" +
-                        $"</li>";
-                    }
-                    return Content(styleStr);
-                }
-                return Content("机构暂时未生效或不存在");
+            string sidx = "";
+            string sord = "";
+            if (orderType == "1")
+            {
+                sidx = "price";
+                sord = "asc";
+            }
+            else if (orderType == "2")
+            {
+                sidx = "price";
+                sord = "desc";
             }
             else
             {
-                return Content("链接不正确不或完整");
+                //sidx = "right(Telphone,1)";//按照最后一位排序
+                //sord = "asc";
+                sidx = "TelphoneID";//按照最后一位排序
+                sord = "desc";
             }
+            Pagination pagination = new Pagination()
+            {
+                rows = 40,
+                page = ipage,
+                sidx = sidx,
+                sord = sord
+            };
+            var entityList = tlbll.GetPageListH5LX(pagination, queryJson.ToString());//自身秒杀可卖，其它平台秒杀不卖
+
+            string styleStr = "";
+            foreach (var item in entityList)
+            {
+                string qian = item.Telphone.Substring(0, 3);
+                string zhong = item.Telphone.Substring(3, 4);
+                string hou = item.Telphone.Substring(7, 4);
+                string telphone = "<font color='#E33F23'>" + qian + "</font><font color='#3A78F3'>" + zhong + "</font><font color='#E33F23'>" + hou + "</font>";
+                //利新价格调整规则，这是需要单独写代码的价格调整：
+                decimal? jg = item.Price;
+
+                styleStr +=
+                $" <li> " +
+                $"    <a href=\"#\" onclick=\"toInfo('{item.TelphoneID}','{host}')\">" +//跳转到135服务器
+                $"        <div class='mobile'>{telphone}</div>" +
+                $"        <div class='city'>{item.City}·{item.Description}</div>" +//·{item.Operator}
+                $"        <div class='price'>" +
+                $"            <i>￥</i>{jg}" +
+                $"            <span class='hide oldprice'>原价<i><i>￥</i>{jg * 2}</i></span>" +
+                //$"            <span class='hide huafei'>话费0</span>" +
+                $"        </div>" +
+                $"    </a>" +
+                $"</li>";
+            }
+            return Content(styleStr);
         }
 
 

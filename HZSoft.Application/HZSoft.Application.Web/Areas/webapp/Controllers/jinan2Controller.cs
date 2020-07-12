@@ -7,6 +7,7 @@ using HZSoft.Application.Busines.CustomerManage;
 using HZSoft.Application.Code;
 using HZSoft.Application.Entity.CustomerManage;
 using HZSoft.Application.Entity.WeChatManage;
+using HZSoft.Application.Web.Utility;
 using HZSoft.Application.Web.Utility.AliPay;
 using HZSoft.Util;
 using HZSoft.Util.WebControl;
@@ -67,6 +68,14 @@ namespace HZSoft.Application.Web.Areas.webapp.Controllers
                 var organize = organizebll.GetEntity(organizeId);
                 if (!string.IsNullOrEmpty(organize.OrganizeId))
                 {
+                    string City = "";
+                    if (string.IsNullOrEmpty(city))
+                    {
+                        string ip = Net.Ip;
+                        City = ApiHelper.GetBaiduIp(ip);
+                        City = City.Length > 2 ? City.Substring(0, 2) : City;
+                        LogHelper.AddLog(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName + "坐标：" + ip + City);
+                    }
                     JObject queryJson = new JObject { { "Telphone", keyword },
                         { "OrganizeIdH5", organizeId },
                         { "pid", organize.ParentId },
@@ -77,7 +86,7 @@ namespace HZSoft.Application.Web.Areas.webapp.Controllers
                         { "yuyi", yuyi },
                         { "Grade",features },
                         { "SellMark",0 },
-                        //{ "ExistMark","1,2" }
+                        { "City",City }
                     };
                     string sidx = "";
                     string sord = "";
