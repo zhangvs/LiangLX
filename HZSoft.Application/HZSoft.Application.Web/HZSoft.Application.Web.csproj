@@ -334,6 +334,7 @@
     <Compile Include="Utility\AliPay\AliPay.cs" />
     <Compile Include="Utility\AliPay\AliPayConfig.cs" />
     <Compile Include="Utility\AnalyzeHelper.cs" />
+    <Compile Include="Utility\ApiHelper.cs" />
     <Compile Include="Utility\CurrentWxUser.cs" />
     <Compile Include="Utility\WebSiteConfig.cs" />
   </ItemGroup>
@@ -2067,6 +2068,7 @@
     <Content Include="Areas\webapp\Views\jinan4\paymentFinish.cshtml" />
     <Content Include="Areas\webapp\Views\jinan4\product.cshtml" />
     <Content Include="Areas\webapp\Views\jinan4\productJsApi.cshtml" />
+    <Content Include="Areas\webapp\Views\jinan\Index - 复制.cshtml" />
     <None Include="Properties\PublishProfiles\165.pubxml" />
     <None Include="Properties\PublishProfiles\6.1.pubxml" />
     <Content Include="Areas\FlowManage\Views\FlowLaunch\Index.cshtml" />

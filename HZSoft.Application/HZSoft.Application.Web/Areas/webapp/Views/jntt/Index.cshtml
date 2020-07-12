@@ -10,7 +10,6 @@
     <link href="~/webapp/css/ali-icon/iconfont.css" rel="stylesheet" />
     <link href="~/webapp/css/m.css" rel="stylesheet" />
     <link href="~/statics/plus/swiper/swiper.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1278991453&web_id=1278991453"></script>
     <style type="text/css">
 
         .slide-box {
@@ -44,9 +43,9 @@
             .slide-box2 img, .slide-box2 li {
             }
     </style>
+    <script type="text/javascript" src="~/statics/js/ext.lanshuo99.cn.js"></script>
     <!-- Bytedance Tracking -->
     <script>
-        var baseUrl = '';
         (function (r, d, s, l) {
             var meteor = r.meteor = r.meteor || []; meteor.methods = ["track", "off", "on"]; meteor.factory = function (method) {
                 return function () {
@@ -59,10 +58,9 @@
                 js.src = "https://analytics.snssdk.com/meteor.js/v1/" + l + "/sdk"; fjs.parentNode.insertBefore(js, fjs)
             }; meteor.load(); if (meteor.invoked) { return }
             meteor.invoked = true; meteor.track("pageview")
-        })(window, document, "script", "1668916263290893");
+        })(window, document, "script", "1670738988147725");
     </script>
     <!-- End Bytedance Tracking -->
-    <script type="text/javascript" src="~/statics/js/ext.lanshuo99.cn.js"></script>
 </head>
 
 <body class="page">
@@ -861,31 +859,31 @@
 
                     </ul>*@
                 @*<div class="tit">数字较多</div>
-                        <ul class="clearfix moreNumber">
+                    <ul class="clearfix moreNumber">
 
-                            <li data-val="">全部</li>
+                        <li data-val="">全部</li>
 
-                            <li data-val="n9">9较多</li>
+                        <li data-val="n9">9较多</li>
 
-                            <li data-val="n8">8较多</li>
+                        <li data-val="n8">8较多</li>
 
-                            <li data-val="n7">7较多</li>
+                        <li data-val="n7">7较多</li>
 
-                            <li data-val="n6">6较多</li>
+                        <li data-val="n6">6较多</li>
 
-                            <li data-val="n5">5较多</li>
+                        <li data-val="n5">5较多</li>
 
-                            <li data-val="n4">4较多</li>
+                        <li data-val="n4">4较多</li>
 
-                            <li data-val="n3">3较多</li>
+                        <li data-val="n3">3较多</li>
 
-                            <li data-val="n2">2较多</li>
+                        <li data-val="n2">2较多</li>
 
-                            <li data-val="n1">1较多</li>
+                        <li data-val="n1">1较多</li>
 
-                            <li data-val="n0">0较多</li>
+                        <li data-val="n0">0较多</li>
 
-                        </ul>
+                    </ul>
                     <div style="height:40px;"></div>*@
                 <div class="filter-more-btn" style="bottom: 40px;">
                     <div class="reset">重置</div>
@@ -936,7 +934,6 @@
     <script src="~/statics/js/jquery.cookie.js"></script>
     <script src="~/statics/js/changestyle.js"></script>
     <script src="~/statics/plus/alt_tabs.js"></script>
-    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
     <script type="text/javascript">
         request = function (keyValue) {
             var search = location.search.slice(1);
@@ -970,12 +967,8 @@
         var orderType = '';
         var mid = 0;
 
-        if (request('city') != "") {
-            city = request('city');
-        }
-        else {
-            city = returnCitySN['cid'];
-        }
+
+        city = request('city');
         keyword = request('keyword');
         orderType = request('orderType');
         price = request('price');
@@ -1471,10 +1464,10 @@
     <script type="text/javascript">
         function toInfo(id, host) {
             if (isWeiXin()) {
-                location.href = 'https://shop.jnlxsm.net/webapp/jntt/productJsApi/' + id + '?host=' + host;
+                location.href = 'https://shop.jnlxsm.net/webapp/jinan5/productJsApi/' + id + '?host=' + host;
             }
             else {
-                location.href = 'https://shop.jnlxsm.net/webapp/jntt/product/' + id + '?host=' + host;
+                location.href = 'https://shop.jnlxsm.net/webapp/jinan5/product/' + id + '?host=' + host;
             }
         }
 

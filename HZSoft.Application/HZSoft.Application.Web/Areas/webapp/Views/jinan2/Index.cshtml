@@ -934,7 +934,6 @@
     <script src="~/statics/js/jquery.cookie.js"></script>
     <script src="~/statics/js/changestyle.js"></script>
     <script src="~/statics/plus/alt_tabs.js"></script>
-    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
     <script type="text/javascript">
         request = function (keyValue) {
             var search = location.search.slice(1);
@@ -968,12 +967,8 @@
         var orderType = '';
         var mid = 0;
 
-        if (request('city') != "") {
-            city = request('city');
-        }
-        else {
-            city = returnCitySN['cid'];
-        }
+
+        city = request('city');
         keyword = request('keyword');
         orderType = request('orderType');
         price = request('price');
@@ -1333,7 +1328,7 @@
 
         function so2() {
             var integrityurl = window.location.href;//头条落地页链接会自动添加一些参数，不能丢失
-            var url = integrityurl+'&city=' + city + '&keyword=' + keyword + '&page=' + curpage + '&features=' + features + '&orderType=' + orderType + '&price=' + price + '&except=' + except + '&yuyi=' + yuyi;
+            var url = integrityurl + '&city=' + city + '&keyword=' + keyword + '&page=' + curpage + '&features=' + features + '&orderType=' + orderType + '&price=' + price + '&except=' + except + '&yuyi=' + yuyi;
             location.href = url;
         }
 
